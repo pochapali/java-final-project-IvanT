@@ -3,6 +3,10 @@ import java.lang.Math;
 import java.util.TreeSet;
 import java.util.Collections;
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.FileWriter;
 
 public class numPicker {
     private int correctCode;
@@ -17,6 +21,15 @@ public class numPicker {
         
     }
     public String start(){
+        try {
+            File Obj = new File("myfile.txt");
+            if (!Obj.exists()){
+                Obj.createNewFile();
+            }
+            
+        }catch(IOException e){
+            return "The game started but the statistics file couldn't be created. \nConsider informing t1triv00@students.oamk.fi about that";
+        }
         return "Okay... the game is going to start\nYou have 5 point, each attempt cost one point, good luck";
 
     }
@@ -35,6 +48,16 @@ public class numPicker {
         }
         else{
             this.isFinished=true;
+            try{
+                File Obj = new File("statistics.txt");
+                FileWriter fr = new FileWriter(Obj, true);
+                fr.write("player "+this.name+" got "+this.points+" points\n");
+                fr.close();
+                
+            }
+            catch(IOException e){
+                return "You won but program failed to write statistics to file.";
+            }
             return "You win!\n\nYou got "+Integer.toString(points)+" points";
         }
     }
@@ -65,12 +88,17 @@ public class numPicker {
         return result;
     }
     public String getStats(){
-        String stats="The players name is "+this.name+"\n";
-        if(isFinished){
-            stats+="You finished the game with "+this.points+" points, congratulations, "+this.name;
+        
+        String stats="";
+        try{
+            File Obj=new File("statistics.txt");
+        Scanner reader=new Scanner(Obj);
+        while (reader.hasNextLine()){
+            stats+=reader.nextLine()+"\n";
         }
-        else{
-            stats+="You didn't finish the game and you still have "+this.points+" points, try more, bro!\nYou can try /hints, it will help you and it's fair to use.";
+        reader.close();
+        }catch(FileNotFoundException e){
+            return "File was not found, no statistics can be given";
         }
         return stats;
     }
