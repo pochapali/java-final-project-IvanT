@@ -1,2 +1,0 @@
-player FinalTest got 2
-player Ivan got 4
