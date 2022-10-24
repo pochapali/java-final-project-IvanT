@@ -8,7 +8,10 @@ public class numPicker {
     private int correctCode;
     private TreeSet<Integer> tries=new TreeSet<Integer>();
     private int points;
-    public numPicker(){
+    private String name;
+    private boolean isFinished=false;
+    public numPicker(String name){
+        this.name=name;
         this.correctCode=(int)(Math.random()*10);
         this.points=5;
         
@@ -31,7 +34,7 @@ public class numPicker {
         
         }
         else{
-            
+            this.isFinished=true;
             return "You win!\n\nYou got "+Integer.toString(points)+" points";
         }
     }
@@ -60,6 +63,16 @@ public class numPicker {
             
         }
         return result;
+    }
+    public String getStats(){
+        String stats="The players name is "+this.name+"\n";
+        if(isFinished){
+            stats+="You finished the game with "+this.points+" points, congratulations, "+this.name;
+        }
+        else{
+            stats+="You didn't finish the game and you still have "+this.points+" points, try more, bro!\nYou can try /hints, it will help you and it's fair to use.";
+        }
+        return stats;
     }
 
     // похуй
