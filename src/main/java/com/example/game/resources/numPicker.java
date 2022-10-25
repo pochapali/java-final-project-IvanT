@@ -34,7 +34,9 @@ public class numPicker {
 
     }
     public String newAttempt(int n){
-        
+        if(isFinished){
+            return "Good attempt, but you can't play after you win\nI congrat you and all that stuff but please POST /start?name=YourName to start new game and win again";
+        }
        
         
         // reader.close();
@@ -84,6 +86,9 @@ public class numPicker {
                 }
             }
             
+        }
+        if(isFinished){
+            result+="\nYou already finished game, bro";
         }
         return result;
     }
